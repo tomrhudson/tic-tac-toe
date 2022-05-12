@@ -61,10 +61,10 @@ class TicTacToe():
         # these are the only moves to win a diagonal
         if square % 2 == 0:
             diagonal1 = [self.board[i] for i in [0, 4, 8]]   # left to right diagonal
-            if all[(spot == letter for spot in diagonal1)]:
+            if all([spot == letter for spot in diagonal1]):
                 return True
             diagonal2 = [self.board[i] for i in [2, 4, 6]]  # right to left diagonal
-            if all[(spot == letter for spot in diagonal2)]:
+            if all([spot == letter for spot in diagonal2]):
                 return True
 
         # if all of these checks fail
