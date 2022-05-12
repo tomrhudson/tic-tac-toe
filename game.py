@@ -1,13 +1,18 @@
 import time
 from player import HumanPlayer, RandomComputerPlayer
 
-class TicTacToe:
+
+class TicTacToe():
     def __init__(self):
-        self.board = [' ' for _ in range(9)]    # we will use a single list to represent each space
+        self.board = self.make_board()
         self.current_winner = None              # keep track of winner
 
+    @staticmethod
+    def make_board():
+        return [' ' for _ in range(9)]
+
     def print_board(self):
-        for row in [self.board[i*3:(i+1)*3] for i in range(3)]:
+        for row in [self.board[i*3:(i+1) *3] for i in range(3)]:
             print('| ' + ' | '.join(row) + ' |')
 
     @staticmethod
@@ -18,7 +23,7 @@ class TicTacToe:
             print('| ' + ' | '.join(row) + ' |')
 
     def available_moves(self):
-        return [i for i, spot in enumerate(self.board) if spot == ' ']
+        return [i for i, spot in enumerate(self.board) if spot == " "]
 
     def empty_squares(self):
         return " " in self.board
@@ -41,29 +46,30 @@ class TicTacToe:
 
         # check rows
         row_ind = square // 3
-        row = self.board[row_ind*3 : (row_ind+1)*3]
-        if all((spot == letter for spot in row)):
+        row = self.board[row_ind*3:(row_ind+1)*3]
+        if all([spot == letter for spot in row]):
             return True
 
         # check columns
         col_ind = square % 3
         column = [self.board[col_ind+1*3] for i in range(3)]
-        if all((spot == letter for spot in column)):
+        if all([spot == letter for spot in column]):
             return True
 
         # check diagonals
         # only if the square is an even number (0, 2, 4, 6, 8)
         # these are the only moves to win a diagonal
         if square % 2 == 0:
-            diagonal1 = [self.board[i] for i in [0, 4, 8]] # left to right diagonal
-            if all((spot == letter for spot in diagonal1)):
+            diagonal1 = [self.board[i] for i in [0, 4, 8]]   # left to right diagonal
+            if all[(spot == letter for spot in diagonal1)]:
                 return True
-            diagonal2 = [self.board[i] for i in [2, 4, 6]] # right to left diagonal
-            if all((spot == letter for spot in diagonal2)):
+            diagonal2 = [self.board[i] for i in [2, 4, 6]]  # right to left diagonal
+            if all[(spot == letter for spot in diagonal2)]:
                 return True
 
         # if all of these checks fail
         return False
+
 
 def play(game, x_player, o_player, print_game=True):
     # returns the winner of the game (the letter (x or o)), or None for a tie
@@ -74,7 +80,7 @@ def play(game, x_player, o_player, print_game=True):
     # iterate while the game still has empty squares
     # (we don't have to worry about winner because we'll return that
     # which breaks the loop)
-    while game.empty_squares:
+    while game.empty_squares():
         # get the move from the appropriate player
         if letter == "O":
             square = o_player.get_move(game)
@@ -92,15 +98,15 @@ def play(game, x_player, o_player, print_game=True):
                 if print_game:
                     print(letter + " wins!")
                 return letter
-
             # after we made our move, we need to switch players
             letter = 'O' if letter == 'X' else 'X'
 
         # tiny break to make things a bit easier to read
-        time.sleep(0.8)
+        time.sleep(.8)
 
     if print_game:
         print ("It's a tie!")
+
 
 if __name__ == '__main__':
     x_player = HumanPlayer("X")
